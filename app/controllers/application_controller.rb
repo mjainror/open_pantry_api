@@ -22,6 +22,13 @@ class ApplicationController < ActionController::API
     }, status: 401 and return
   end
 
+  def unprocessable_entity errors = ""
+    render json: {
+      success: false,
+      error: errors
+    }, status: 422 and return
+  end
+
   def current_api_user
     @current_api_user ||= request.headers["X-User-Token"].present? ? get_decoded_user(request.headers["X-User-Token"]) : nil
   end

@@ -14,7 +14,10 @@ Rails.application.routes.draw do
       resources :suppliers, only: %w(show) do
         collection do
           post :supply_category
+          
+          resources :products, only: %w(index create), module: :suppliers
         end
+
       end
     end
   end
