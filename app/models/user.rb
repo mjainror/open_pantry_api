@@ -4,6 +4,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :favorites, dependent: :destroy
+  has_many :favorite_products, through: :favorites, source: :product
+
   before_create :set_default_type!
 
   def generate_jwt
