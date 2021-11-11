@@ -21,4 +21,17 @@ class ApplicationController < ActionController::API
       error: "Unauthorized Access!"
     }, status: 401 and return
   end
+
+  def current_api_user
+    @current_api_user ||= request.headers["X-User-Token"].present? ? get_decoded_user(request.headers["X-User-Token"]) : nil
+  end
+
+  def authenticate_user
+    unauthorized_access! if current_api_user.blank?
+  end
+
+  def get_decoded_user(token)
+    jwt_payload = JWT.decode(token, Rails.application.secrets.secret_key_base).first
+    User.find(jwt_payload['id'])
+  end
 end
