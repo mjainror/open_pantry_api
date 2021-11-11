@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  before_create :set_default_type!
+
   def generate_jwt
     JWT.encode({ id: id,
                 exp: 60.days.from_now.to_i },
@@ -16,5 +18,11 @@ class User < ApplicationRecord
 
   def customer?
     type == "Customer"
+  end
+
+  protected
+
+  def set_default_type!
+    self.type = "Customer" if self.type.blank?
   end
 end

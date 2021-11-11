@@ -4,6 +4,8 @@ Rails.application.routes.draw do
     scope :v1 do
       devise_for :users, controllers: { sessions: "api/v1/users/sessions",
                                         registrations: "api/v1/users/registrations" }
+
+      devise_for :suppliers, controllers: { registrations: "api/v1/suppliers/registrations" }, skip: %w(sessions passwords)
     end
   end
 
