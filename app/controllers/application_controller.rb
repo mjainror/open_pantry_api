@@ -30,6 +30,14 @@ class ApplicationController < ActionController::API
     unauthorized_access! if current_api_user.blank?
   end
 
+  def current_supplier
+    @current_supplier ||= current_api_user.supplier? ? current_api_user : nil
+  end
+
+  def authenticate_supplier
+    unauthorized_access! if current_supplier.blank?
+  end
+
   def get_decoded_user(token)
     jwt_payload = JWT.decode(token, Rails.application.secrets.secret_key_base).first
     User.find(jwt_payload['id'])

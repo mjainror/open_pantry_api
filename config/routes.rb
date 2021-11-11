@@ -10,6 +10,12 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       resources :categories, only: %w(index)
+
+      resources :suppliers, only: %w(show) do
+        collection do
+          post :supply_category
+        end
+      end
     end
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

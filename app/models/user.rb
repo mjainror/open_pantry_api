@@ -9,4 +9,12 @@ class User < ApplicationRecord
                 exp: 60.days.from_now.to_i },
                Rails.application.secrets.secret_key_base)
   end
+
+  def supplier?
+    type == "Supplier"
+  end
+
+  def customer?
+    type == "Customer"
+  end
 end
