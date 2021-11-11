@@ -12,6 +12,12 @@ class User < ApplicationRecord
                Rails.application.secrets.secret_key_base)
   end
 
+  def expire_jwt
+    JWT.encode({ id: id,
+                exp: Time.now.to_i },
+               Rails.application.secrets.secret_key_base)
+  end
+
   def supplier?
     type == "Supplier"
   end

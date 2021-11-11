@@ -11,6 +11,13 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
+
+      namespace :users do
+        devise_scope :user do
+          post "logout" => "sessions#logout"
+        end
+      end
+
       resources :categories, only: %w(index)
 
       resources :suppliers, only: %w(show) do
