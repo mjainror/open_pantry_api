@@ -17,8 +17,9 @@ Rails.application.routes.draw do
           
           resources :products, only: %w(index create), module: :suppliers
         end
-
       end
+
+      resources :products, only: %w(index)
     end
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
